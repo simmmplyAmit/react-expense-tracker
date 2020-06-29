@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles, Paper, Typography } from "@material-ui/core";
+import { makeStyles, Paper, ListItem, ListItemText } from "@material-ui/core";
 import {
     SwipeableList,
     SwipeableListItem,
@@ -9,7 +9,7 @@ import "@sandstreamdev/react-swipeable-list/dist/styles.css";
 const styles = makeStyles({
     transaction: {
         margin: 10,
-        padding: 10,
+        // padding: 10,
         display: "flex",
         justifyContent: "space-between",
     },
@@ -21,6 +21,9 @@ const styles = makeStyles({
 function Transaction({ transaction, deleteTransaction }) {
     const classes = styles();
 
+    const getPrice = () =>
+        `₹${transaction.income ? "" : "-"}${transaction.amount}`;
+
     return (
         <SwipeableList>
             <SwipeableListItem
@@ -31,7 +34,7 @@ function Transaction({ transaction, deleteTransaction }) {
                         </div>
                     ),
                     action: () => {
-                        console.log(`Deleting transaction ${transaction}`);
+                        // console.log(`Deleting transaction ${transaction}`);
                         deleteTransaction(transaction);
                     },
                 }}
@@ -41,12 +44,18 @@ function Transaction({ transaction, deleteTransaction }) {
                 // }}
             >
                 <Paper className={classes.transaction} key={transaction.id}>
-                    <Typography variant="subtitle2">
-                        {transaction.title}
-                    </Typography>
-                    <Typography variant="body1">
-                        {transaction.amount}
-                    </Typography>
+                    <ListItem>
+                        <ListItemText
+                            primary={transaction.title}
+                            secondary={new Date(
+                                transaction.date
+                            ).toDateString()}
+                        />
+                        <ListItemText
+                            primary={getPrice()}
+                            style={{ textAlign: "end" }}
+                        />
+                    </ListItem>
                 </Paper>
             </SwipeableListItem>
         </SwipeableList>

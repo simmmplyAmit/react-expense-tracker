@@ -1,22 +1,39 @@
+import "date-fns";
 import React, { Component } from "react";
 import {
     TextField,
     Button,
     Grid,
-    Typography,
-    Snackbar,
     Fab,
     Dialog,
     DialogTitle,
     DialogContent,
+    Checkbox,
+    FormGroup,
+    FormControlLabel,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import SuccessSnackBar from "./SuccessSnackBar";
+// import DateFnsUtils from "@date-io/date-fns";
+import MomentUtils from "@date-io/moment";
+import {
+    MuiPickersUtilsProvider,
+    // KeyboardDatePicker,
+    DatePicker,
+} from "material-ui-pickers";
 
 class AddTransactionDialog extends Component {
     state = {
         title: "",
         amount: undefined,
+        income: false,
+        date: undefined,
+    };
+
+    handleDateChange = (date) => {
+        this.setState({
+            date,
+        });
     };
 
     handleFormChange = (e) => {
@@ -36,6 +53,10 @@ class AddTransactionDialog extends Component {
 
     handleClose = () => {
         this.props.handleClose();
+        this.setState({
+            title: "",
+            amount: undefined,
+        });
     };
 
     render() {
@@ -49,8 +70,6 @@ class AddTransactionDialog extends Component {
                 <DialogTitle id="simple-dialog-title">
                     Add Transaction
                 </DialogTitle>
-                {/* <div style={{ marginTop: "40" }}>
-                <Typography variant="h6">Add Transaction</Typography> */}
                 <DialogContent>
                     <form onSubmit={this.handleFormSubmit}>
                         <Grid container spacing={2}>
@@ -58,7 +77,6 @@ class AddTransactionDialog extends Component {
                                 <TextField
                                     id="title"
                                     label="Expense"
-                                    value={this.state.title}
                                     onChange={this.handleFormChange}
                                     required
                                     error={false}
@@ -69,13 +87,83 @@ class AddTransactionDialog extends Component {
                                 <TextField
                                     id="amount"
                                     label="Amount"
-                                    value={this.state.amount}
                                     onChange={this.handleFormChange}
                                     required
                                     error={false}
                                     fullWidth
                                     type="number"
                                 />
+                            </Grid>
+                            <Grid item xs={6}>
+                                <FormGroup>
+                                    <FormControlLabel
+                                        control={
+                                            <Checkbox
+                                                color="primary"
+                                                inputProps={{
+                                                    "aria-label":
+                                                        "secondary checkbox",
+                                                }}
+                                                onChange={(e) =>
+                                                    this.setState({
+                                                        income:
+                                                            e.target.checked,
+                                                    })
+                                                }
+                                            />
+                                        }
+                                        label="Income"
+                                    />
+                                </FormGroup>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <MuiPickersUtilsProvider utils={MomentUtils}>
+                                    <DatePicker
+                                        keyboard
+                                        placeholder="DD/MM/YYYY"
+                                        format={"DD/MM/YYYY"}
+                                        // handle clearing outside => pass plain array if you are not controlling value outside
+                                        // mask={(value) =>
+                                        //     value
+                                        //         ? [
+                                        //               /\d/,
+                                        //               /\d/,
+                                        //               "/",
+                                        //               /\d/,
+                                        //               /\d/,
+                                        //               "/",
+                                        //               /\d/,
+                                        //               /\d/,
+                                        //               /\d/,
+                                        //               /\d/,
+                                        //           ]
+                                        //         : []
+                                        // }
+                                        value={this.state.date}
+                                        onChange={this.handleDateChange}
+                                        // disableOpenOnEnter
+                                        animateYearScrolling={false}
+                                        autoOk={true}
+                                        clearable
+                                        // onInputChange={(e) =>
+                                        //     console.log(
+                                        //         "Keyboard:",
+                                        //         e.target.value
+                                        //     )
+                                        // }
+                                    />
+
+                                    {/* <p>
+                                        {this.state.selectedDate === null
+                                            ? "Its null"
+                                            : "Not Null"}
+                                    </p>
+                                    <p>
+                                        {JSON.stringify(
+                                            this.state.selectedDate
+                                        )}
+                                    </p> */}
+                                </MuiPickersUtilsProvider>
                             </Grid>
                             <Button
                                 style={{ margin: "auto", marginBottom: 20 }}
@@ -88,8 +176,6 @@ class AddTransactionDialog extends Component {
                         </Grid>
                     </form>
                 </DialogContent>
-
-                {/* </div> */}
             </Dialog>
         );
     }

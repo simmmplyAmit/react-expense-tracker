@@ -3,8 +3,9 @@ body {
     max-width: 350px;
     margin: auto;
     background-color: #eee;
+    /* overflow-y: hidden; */
 }
 
-.MuiPaper-root {
-    width: 100%;
+.paper {
+    width: 60%;
 }

@@ -11,7 +11,9 @@ const styles = makeStyles({
 function Balance({ transactions }) {
     const classes = styles();
     let total = transactions.reduce(function (total, transaction) {
-        return total + +transaction.amount;
+        return transaction.income
+            ? total + transaction.amount
+            : total - transaction.amount;
     }, 0);
     return (
         <div className={classes.balance}>

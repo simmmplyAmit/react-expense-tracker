@@ -21,7 +21,7 @@ function Summary({ transactions }) {
         expense = 0;
 
     transactions.forEach((transaction) => {
-        transaction.amount > 0
+        transaction.income
             ? (income += +transaction.amount)
             : (expense += Math.abs(transaction.amount));
     });
