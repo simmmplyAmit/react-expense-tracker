@@ -1,0 +1,1 @@
+{"version":3,"sources":["App.css"],"names":[],"mappings":"AAAA,KACI,UAAW,CACX,eAAgB,CAChB,WAAY,CACZ,qBAEJ,CAEA,OACI,SACJ","file":"main.208bfe5d.chunk.css","sourcesContent":["body {\n    width: 100%;\n    max-width: 350px;\n    margin: auto;\n    background-color: #eee;\n    /* overflow-y: hidden; */\n}\n\n.paper {\n    width: 60%;\n}\n"]}
