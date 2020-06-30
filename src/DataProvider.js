@@ -4,7 +4,7 @@ import { stringify } from "query-string";
 // import updateProvider from "./updateProvider";
 // import createProvider from "./createProvider";
 
-const apiUrl = "http://localhost:1337";
+const apiUrl = "https://www.simpleapps.pw";
 // const axios = fetchUtils.fetchJson;
 
 export default {
